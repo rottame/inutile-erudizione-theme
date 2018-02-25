@@ -1,0 +1,531 @@
+<?php
+require_once ABSPATH.'/wp-content/themes/colormag/inc/widgets/widgets.php';
+
+add_action('widgets_init', 'palate_widgets_init');
+
+function palate_widgets_init() {
+	register_sidebar( array(
+		'name'          => esc_html__('Front Page: News Area', 'palate'),
+		'id'            => 'palate_news_area',
+		'description'   => esc_html__('Show widget just below menu.', 'palate'),
+		'before_widget' => '<section id="%1$s" class="widget %2$s clearfix">',
+		'after_widget'  => '</section>',
+		'before_title'  => '<h3 class="widget-title"><span>',
+		'after_title'   => '</span></h3>',
+	) );
+
+  register_widget("palate_new_posts_widget");
+  register_widget("palate_featured_posts_widget");
+  register_widget("palate_highlighted_posts_widget");
+  register_widget("palate_separator");
+	register_widget("palate_category_link");
+}
+
+class palate_separator extends WP_Widget {
+	function __construct() {
+		$widget_ops  = array(
+      'classname' => 'separator',
+      'description' => __('Display a separator.', 'palate')
+    );
+		$control_ops = array('width' => 200, 'height' => 250);
+		parent::__construct(false, $name = __( 'SIE: Separator', 'palate'), $widget_ops);
+	}
+
+	function form( $instance ) {
+    $tg_defaults[ 'style' ]    = '';
+		$instance                  = wp_parse_args( ( array ) $instance, $tg_defaults );
+		$style                     = esc_attr( $instance[ 'style' ] );
+
+    ?>
+		<p>
+			<label for="<?php echo $this->get_field_id( 'style' ); ?>"><?php _e( 'Style:', 'palate' ); ?></label>
+			<input id="<?php echo $this->get_field_id( 'style' ); ?>" name="<?php echo $this->get_field_name( 'style' ); ?>" type="text" value="<?php echo $style; ?>"/>
+		</p>
+		<?php
+	}
+
+	function update( $new_instance, $old_instance ) {
+		$instance            = $old_instance;
+    $instance[ 'style' ] = strip_tags( $new_instance[ 'style' ] );
+		return $instance;
+	}
+
+	function widget( $args, $instance ) {
+		extract( $args );
+		extract( $instance );
+		global $post;
+    $style    = isset( $instance[ 'style' ] ) ? $instance[ 'style' ] : 1;
+		echo $before_widget;
+    ?>
+    <div class="hr style<?php echo $style?>"><span></span><span></span><span></span></div>
+    <?php
+		echo $after_widget;
+	}
+}
+
+class palate_category_link extends WP_Widget {
+	function __construct() {
+		$widget_ops  = array(
+      'classname' => 'category-link',
+      'description' => __('Display a link to a category.', 'palate')
+    );
+		$control_ops = array('width' => 200, 'height' => 250);
+		parent::__construct(false, $name = __( 'SIE: Category link', 'palate'), $widget_ops);
+	}
+
+	function form( $instance ) {
+		$tg_defaults[ 'category' ] = '';
+		$instance                  = wp_parse_args( ( array ) $instance, $tg_defaults );
+		$category                  = $instance[ 'category' ];
+		?>
+		<p>
+			<label for="<?php echo $this->get_field_id( 'category' ); ?>"><?php _e( 'Select category', 'colormag' ); ?>
+				:</label>
+			<?php wp_dropdown_categories( array( 'show_option_none' => ' ', 'name' => $this->get_field_name( 'category' ), 'selected' => $category ) ); ?>
+		</p>
+		<?php
+	}
+
+	function update( $new_instance, $old_instance ) {
+		$instance            = $old_instance;
+    $instance[ 'category' ] = strip_tags( $new_instance[ 'category' ] );
+		return $instance;
+	}
+
+	function widget( $args, $instance ) {
+		extract( $args );
+		extract( $instance );
+		global $post;
+    $category    = isset( $instance[ 'category' ] ) ? $instance[ 'category' ] : 1;
+		echo $before_widget;
+    ?>
+    <div class="the-link">
+      <a href="<?php echo get_category_link( $category ) ?>">
+        <span></span>
+        Erudito Archivio
+      </a>
+    </div>
+    <?php
+		echo $after_widget;
+	}
+}
+
+class palate_new_posts_widget extends WP_Widget {
+	function __construct() {
+		$widget_ops  = array(
+      'classname' => 'new_posts',
+      'description' => __('Display latest posts or posts of specific category, which will be used as the slider.', 'palate')
+    );
+		$control_ops = array('width' => 200, 'height' => 250);
+		parent::__construct(false, $name = __( 'SIE: Featured Category Slider', 'palate'), $widget_ops);
+	}
+
+	function form( $instance ) {
+    $tg_defaults[ 'title' ]    = '';
+		$tg_defaults[ 'cats' ]    = '';
+		$instance                  = wp_parse_args( ( array ) $instance, $tg_defaults );
+    $title                     = esc_attr( $instance[ 'title' ] );
+		$cats                      = esc_attr( $instance[ 'cats' ] );
+
+    ?>
+		<p>
+			<label for="<?php echo $this->get_field_id( 'cats' ); ?>"><?php _e( 'Categories:', 'colormag' ); ?></label>
+			<input id="<?php echo $this->get_field_id( 'cats' ); ?>" name="<?php echo $this->get_field_name( 'cats' ); ?>" type="text" value="<?php echo $cats; ?>"/>
+		</p>
+		<p>
+			<label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e( 'Title:', 'colormag' ); ?></label>
+			<input id="<?php echo $this->get_field_id( 'title' ); ?>" name="<?php echo $this->get_field_name( 'title' ); ?>" type="text" value="<?php echo $title; ?>"/>
+		</p>
+		<?php
+	}
+
+	function update( $new_instance, $old_instance ) {
+		$instance            = $old_instance;
+    $instance[ 'title' ] = strip_tags( $new_instance[ 'title' ] );
+		$instance[ 'cats' ] = strip_tags( $new_instance[ 'cats' ] );
+		return $instance;
+	}
+
+	function widget( $args, $instance ) {
+		extract( $args );
+		extract( $instance );
+
+		global $post;
+    $title    = isset( $instance[ 'title' ] ) ? $instance[ 'title' ] : '';
+		$cats     = isset( $instance[ 'cats' ] )  ? $instance[ 'cats' ] : '';
+    $cats = explode(',', $cats);
+    $cats = array_map(function($s){return trim($s);}, $cats);
+
+		$post_status = 'publish';
+		if ( get_option( 'fresh_site' ) == 1 ) {
+			$post_status = array( 'auto-draft', 'publish' );
+		}
+
+		if ( empty($cats) ) {
+			$get_featured_posts = new WP_Query( array(
+				'posts_per_page'      => $number,
+				'post_type'           => 'post',
+				'ignore_sticky_posts' => true,
+				'post_status'         => $post_status,
+			) );
+		} else {
+			$get_featured_posts = new WP_Query( array(
+				'posts_per_page' => $number,
+				'post_type'      => 'post',
+				'category__in'   => $cats,
+			));
+		}
+
+		echo $before_widget;
+		?>
+		<?php
+		if ( ! empty( $title ) ) {
+			echo '<h3 class="widget-title"><span>' . esc_html( $title ) . '</span></h3>';
+		}
+		$i = 1;
+
+    $oldcat = null;
+    ?>
+    <div class="articles">
+    <?php
+		while ( $get_featured_posts->have_posts() ):$get_featured_posts->the_post();
+      $cat = get_the_category($get_featured_posts->post->ID);
+      $catid = @$cat[0]->term_id;
+      if(empty($catid)) $catid = 'none';
+
+      if($catid != $oldcat) {
+			?>
+			  <div class="single-article clearfix">
+				<?php
+				if ( has_post_thumbnail() ) {
+					$image           = '';
+					$thumbnail_id    = get_post_thumbnail_id( $post->ID );
+					$image_alt_text  = get_post_meta( $thumbnail_id, '_wp_attachment_image_alt', true );
+					$title_attribute = get_the_title( $post->ID );
+					if ( empty( $image_alt_text ) ) {
+						$image_alt_text = $title_attribute;
+					}
+					$image .= '<figure>';
+					$image .= '<a href="' . get_permalink() . '" title="' . the_title( '', '', false ) . '">';
+					$image .= get_the_post_thumbnail( $post->ID, $featured, array( 'title' => esc_attr( $title_attribute ), 'alt' => esc_attr( $image_alt_text ) ) ) . '</a>';
+					$image .= '</figure>';
+					echo $image;
+				}
+				?>
+				<div class="article-content">
+					<h3 class="entry-title">
+						<a href="<?php the_permalink(); ?>" title="<?php the_title_attribute(); ?>"><?php the_title(); ?></a>
+					</h3>
+          <?php colormag_colored_category(); ?>
+					<div class="below-entry-meta">
+						<?php
+						$time_string = '<time class="entry-date published" datetime="%1$s">%2$s</time>';
+						$time_string = sprintf( $time_string, esc_attr( get_the_date( 'c' ) ), esc_html( get_the_date() )
+						);
+						printf( __( '<span class="posted-on"><a href="%1$s" title="%2$s" rel="bookmark"><i class="fa fa-calendar-o"></i> %3$s</a></span>', 'colormag' ), esc_url( get_permalink() ), esc_attr( get_the_time() ), $time_string
+						);
+						?>
+						<span class="byline"><span class="author vcard"><i class="fa fa-user"></i><a class="url fn n" href="<?php echo esc_url( get_author_posts_url( get_the_author_meta( 'ID' ) ) ); ?>" title="<?php echo get_the_author(); ?>"><?php echo esc_html( get_the_author() ); ?></a></span></span>
+						<span class="comments"><i class="fa fa-comment"></i><?php comments_popup_link( '0', '1', '%' ); ?></span>
+					</div>
+					<div class="entry-content">
+						<?php the_excerpt(); ?>
+					</div>
+				</div>
+
+			</div>
+			<?php
+
+        $oldcat = $catid;
+        $i++;
+        if($i == 3) {
+          break;
+        }
+      }
+		endwhile;
+		// Reset Post Data
+		wp_reset_query();
+		?>
+		</div>
+		<?php
+		echo $after_widget;
+	}
+}
+
+class palate_featured_posts_widget extends colormag_featured_posts_widget {
+	function __construct() {
+		$widget_ops  = array( 'classname' => 'widget_featured_posts widget_featured_meta', 'description' => __( 'Display latest posts or posts of specific category.', 'colormag' ) );
+		$control_ops = array( 'width' => 200, 'height' => 250 );
+		WP_Widget::__construct( false, $name = __( 'SIE: Featured Posts (Style 1)', 'palate' ), $widget_ops );
+	}
+
+	function widget( $args, $instance ) {
+		extract( $args );
+		extract( $instance );
+
+		global $post;
+		$title    = isset( $instance[ 'title' ] ) ? $instance[ 'title' ] : '';
+		$text     = isset( $instance[ 'text' ] ) ? $instance[ 'text' ] : '';
+		$number   = empty( $instance[ 'number' ] ) ? 4 : $instance[ 'number' ];
+		$type     = isset( $instance[ 'type' ] ) ? $instance[ 'type' ] : 'latest';
+		$category = isset( $instance[ 'category' ] ) ? $instance[ 'category' ] : '';
+
+		$post_status = 'publish';
+		if ( get_option( 'fresh_site' ) == 1 ) {
+			$post_status = array( 'auto-draft', 'publish' );
+		}
+
+		if ( $type == 'latest' ) {
+			$get_featured_posts = new WP_Query( array(
+				'posts_per_page'      => $number + 1,
+				'post_type'           => 'post',
+				'ignore_sticky_posts' => true,
+				'post_status'         => $post_status,
+			) );
+		} else {
+			$get_featured_posts = new WP_Query( array(
+				'posts_per_page' => $number + 1,
+				'post_type'      => 'post',
+				'category__in'   => $category,
+			) );
+		}
+
+		echo $before_widget;
+		?>
+		<?php
+		if ( $type != 'latest' ) {
+			$border_color = 'style="border-bottom-color:' . colormag_category_color( $category ) . ';"';
+			$title_color  = 'style="background-color:' . colormag_category_color( $category ) . ';"';
+		} else {
+			$border_color = '';
+			$title_color  = '';
+		}
+		if ( ! empty( $title ) ) {
+      $cssclass = strtolower(iconv('ISO-8859-1', 'ASCII//TRANSLIT', $title));
+      $cssclass = preg_replace('/[^a-z0-9]+/', '-', $cssclass);
+			echo '<h3 class="widget-title ' . $cssclass . '" ' . $border_color . '><span ' . $title_color . '>' . filter_category( esc_html( $title ) ) . '</span></h3>';
+		}
+		if ( ! empty( $text ) ) {
+			?> <p> <?php echo esc_textarea( $text ); ?> </p> <?php } ?>
+		<?php
+		$i = 1;
+    $get_featured_posts->the_post();
+		while ( $get_featured_posts->have_posts() ):$get_featured_posts->the_post();
+			?>
+			<?php if ( $i == 1 ) {
+				$featured = 'colormag-featured-post-medium';
+			} else {
+				$featured = 'colormag-featured-post-small';
+			}
+      if ( $i == 1 ) {
+				echo '<div class="first-post">';
+			} else if ( $i == 2 ) {
+				echo '<div class="following-post">';
+			}
+      if ( $i > 2 ) {
+        echo '<div class="hr style4"><span></span><span></span><span></span></div>';
+      }
+      ?>
+			<div class="single-article clearfix">
+				<?php
+				if ( has_post_thumbnail() ) {
+					$image           = '';
+					$thumbnail_id    = get_post_thumbnail_id( $post->ID );
+					$image_alt_text  = get_post_meta( $thumbnail_id, '_wp_attachment_image_alt', true );
+					$title_attribute = get_the_title( $post->ID );
+					if ( empty( $image_alt_text ) ) {
+						$image_alt_text = $title_attribute;
+					}
+					$image .= '<figure>';
+					$image .= '<a href="' . get_permalink() . '" title="' . the_title( '', '', false ) . '">';
+					$image .= get_the_post_thumbnail( $post->ID, $featured, array( 'title' => esc_attr( $title_attribute ), 'alt' => esc_attr( $image_alt_text ) ) ) . '</a>';
+					$image .= '</figure>';
+					echo $image;
+				}
+				?>
+				<div class="article-content">
+					<h3 class="entry-title">
+						<a href="<?php the_permalink(); ?>" title="<?php the_title_attribute(); ?>"><?php the_title(); ?></a>
+					</h3>
+					<div class="below-entry-meta">
+						<?php
+						$time_string = '<time class="entry-date published" datetime="%1$s">%2$s</time>';
+						$time_string = sprintf( $time_string, esc_attr( get_the_date( 'c' ) ), esc_html( get_the_date() )
+						);
+						printf( __( '<span class="posted-on"><a href="%1$s" title="%2$s" rel="bookmark"><i class="fa fa-calendar-o"></i> %3$s</a></span>', 'colormag' ), esc_url( get_permalink() ), esc_attr( get_the_time() ), $time_string
+						);
+						?>
+						<span class="byline"><span class="author vcard"><i class="fa fa-user"></i><a class="url fn n" href="<?php echo esc_url( get_author_posts_url( get_the_author_meta( 'ID' ) ) ); ?>" title="<?php echo get_the_author(); ?>"><?php echo esc_html( get_the_author() ); ?></a></span></span>
+						<span class="comments"><i class="fa fa-comment"></i><?php comments_popup_link( '0', '1', '%' ); ?></span>
+					</div>
+					<?php if ( $i == 1 ) { ?>
+						<div class="entry-content">
+							<?php the_excerpt(); ?>
+						</div>
+					<?php } ?>
+				</div>
+
+			</div>
+			<?php
+      if ( $i == 1 ) {
+				echo '</div>';
+			}
+
+			$i ++;
+		endwhile;
+		if ( $i > 2 ) {
+			echo '</div>';
+		}
+		// Reset Post Data
+		wp_reset_query();
+		?>
+		<!-- </div> -->
+		<?php
+		echo $after_widget;
+	}
+}
+
+
+/**
+ * Highlighted Posts widget
+ */
+class palate_highlighted_posts_widget extends WP_Widget {
+
+	function __construct() {
+		$widget_ops  = array( 'classname' => 'widget_highlighted_posts widget_featured_meta widget_pillole_di_erudizione', 'description' => __( 'Display latest posts or posts of specific category. Suitable for the Area Beside Slider Sidebar.', 'palate' ) );
+		$control_ops = array( 'width' => 200, 'height' => 250 );
+		parent::__construct( false, $name = __( 'SIE: Highlighted Posts', 'palate' ), $widget_ops );
+	}
+
+	function form( $instance ) {
+		$tg_defaults[ 'number' ]   = 3;
+		$tg_defaults[ 'type' ]     = 'latest';
+    $tg_defaults[ 'category' ] = '';
+		$tg_defaults[ 'title' ] = '';
+		$instance                  = wp_parse_args( ( array ) $instance, $tg_defaults );
+		$number                    = $instance[ 'number' ];
+		$type                      = $instance[ 'type' ];
+    $category                  = $instance[ 'category' ];
+		$title                     = $instance[ 'title' ];
+		?>
+		<p>
+			<label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e( 'Title:', 'colormag' ); ?></label>
+			<input id="<?php echo $this->get_field_id( 'title' ); ?>" name="<?php echo $this->get_field_name( 'title' ); ?>" type="text" value="<?php echo $title; ?>"/>
+		</p>
+    <?php /*
+		<p>
+			<label for="<?php echo $this->get_field_id( 'number' ); ?>"><?php _e( 'Number of posts to display:', 'colormag' ); ?></label>
+			<input id="<?php echo $this->get_field_id( 'number' ); ?>" name="<?php echo $this->get_field_name( 'number' ); ?>" type="text" value="<?php echo $number; ?>" size="3"/>
+		</p>
+
+    */ ?>
+
+		<p>
+			<input type="radio" <?php checked( $type, 'latest' ) ?> id="<?php echo $this->get_field_id( 'type' ); ?>" name="<?php echo $this->get_field_name( 'type' ); ?>" value="latest"/><?php _e( 'Show latest Posts', 'colormag' ); ?>
+			<br/>
+			<input type="radio" <?php checked( $type, 'category' ) ?> id="<?php echo $this->get_field_id( 'type' ); ?>" name="<?php echo $this->get_field_name( 'type' ); ?>" value="category"/><?php _e( 'Show posts from a category', 'colormag' ); ?>
+			<br/></p>
+
+		<p>
+			<label for="<?php echo $this->get_field_id( 'category' ); ?>"><?php _e( 'Select category', 'colormag' ); ?>
+				:</label>
+			<?php wp_dropdown_categories( array( 'show_option_none' => ' ', 'name' => $this->get_field_name( 'category' ), 'selected' => $category ) ); ?>
+		</p>
+		<?php
+	}
+
+	function update( $new_instance, $old_instance ) {
+		$instance               = $old_instance;
+		$instance[ 'number' ]   = absint( $new_instance[ 'number' ] );
+    if ( empty( $instance[ 'number' ] ) ) {
+      $instance[ 'number' ] = 3;
+    }
+		$instance[ 'type' ]     = $new_instance[ 'type' ];
+    $instance[ 'category' ] = $new_instance[ 'category' ];
+		$instance[ 'title' ]    = $new_instance[ 'title' ];
+
+		return $instance;
+	}
+
+	function widget( $args, $instance ) {
+		extract( $args );
+		extract( $instance );
+
+		global $post;
+		$number   = empty( $instance[ 'number' ] ) ? 3 : $instance[ 'number' ];
+    $number = 3;
+		$type     = isset( $instance[ 'type' ] ) ? $instance[ 'type' ] : 'latest';
+		$category = isset( $instance[ 'category' ] ) ? $instance[ 'category' ] : '';
+
+		$post_status = 'publish';
+		if ( get_option( 'fresh_site' ) == 1 ) {
+			$post_status = array( 'auto-draft', 'publish' );
+		}
+
+		if ( $type == 'latest' ) {
+			$get_featured_posts = new WP_Query( array(
+				'posts_per_page'      => $number,
+				'post_type'           => 'post',
+				'ignore_sticky_posts' => true,
+				'post_status'         => $post_status,
+			) );
+		} else {
+			$get_featured_posts = new WP_Query( array(
+				'posts_per_page' => $number,
+				'post_type'      => 'post',
+				'category__in'   => $category,
+			) );
+		}
+		echo $before_widget;
+		if ( ! empty( $title ) ) {
+      $cssclass = strtolower(iconv('ISO-8859-1', 'ASCII//TRANSLIT', $title));
+      $cssclass = preg_replace('/[^a-z0-9]+/', '-', $cssclass);
+			echo '<h3 class="widget-title ' . $cssclass . '" ' . $border_color . '><span ' . $title_color . '>' . filter_category( esc_html( $title ) ) . '</span></h3>';
+		}
+		?>
+		<div class="widget_highlighted_post_area">
+			<?php $featured = 'colormag-highlighted-post'; ?>
+			<?php
+			$i = 1;
+			while ( $get_featured_posts->have_posts() ):$get_featured_posts->the_post();
+				?>
+				<div class="single-article single-pill">
+          <div class="pill-number">
+            <a href="<?php echo get_permalink() ?>" title="<?php echo the_title( '', '', false ) ?>">
+              <span class="pillno">§<?php echo pill_number(the_title( '', '', false )) ?></span>
+            </a>
+          </div>
+          <div class="hr style4"><span></span><span></span><span></span></div>
+          <?php
+					?>
+					<div class="article-content">
+						<div class="below-entry-meta">
+							<?php
+							$time_string = '<time class="entry-date published" datetime="%1$s">%2$s</time>';
+							$time_string = sprintf( $time_string, esc_attr( get_the_date( 'c' ) ), esc_html( get_the_date() )
+							);
+							printf( __( '<span class="posted-on"><a href="%1$s" title="%2$s" rel="bookmark"><i class="fa fa-calendar-o"></i> %3$s</a></span>', 'colormag' ), esc_url( get_permalink() ), esc_attr( get_the_time() ), $time_string
+							);
+							?>
+							<span class="byline"><span class="author vcard"><i class="fa fa-user"></i><a class="url fn n" href="<?php echo esc_url( get_author_posts_url( get_the_author_meta( 'ID' ) ) ); ?>" title="<?php echo get_the_author(); ?>"><?php echo esc_html( get_the_author() ); ?></a></span></span>
+							<span class="comments"><i class="fa fa-comment"></i><?php comments_popup_link( '0', '1', '%' ); ?></span>
+						</div>
+            <div class="entry-content">
+              <?php the_excerpt(); ?>
+            </div>
+					</div>
+
+
+				</div>
+				<?php
+				$i ++;
+			endwhile;
+			// Reset Post Data
+			wp_reset_query();
+			?>
+		</div>
+		<?php
+		echo $after_widget;
+	}
+
+}

@@ -1,0 +1,131 @@
+body {
+  background-image: url('images/background_dark.jpg');
+  background-position: center top;
+  background-size: cover;
+  background-attachment: fixed;
+  padding: 0;
+  font-family: $base-font;
+  font-size: $base-font-size;
+
+  p,
+  .widget_featured_posts .article-content .entry-content p {
+    font-size: $base-font-size;
+    font-family: $base-font;
+  }
+}
+#page {
+  background-color: #e0ded7;
+  background-image: url('images/background_light2.jpg');
+  background-size: 25%;
+
+  @media screen and (min-width: 480px) {
+    -webkit-mask: url('images/background_mask.svg') 0 0 repeat-y;
+    -webkit-mask-origin: border-box;
+    mask: url('images/background_mask.svg') 0 0 repeat-y;
+    mask-origin: border-box;
+
+    @media screen and (max-width: 1190px) {
+      width: calc(100vw - 20px);
+      -webkit-mask-size: calc(100vw - 20px);
+      mask-size: calc(100vw - 20px);
+    }
+  }
+}
+#main ,
+#secondary .widget,
+.error-404 .widget {
+  background: transparent;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  color: black;
+}
+
+#main {
+  h1, h2, h3, h4, h5, h6 {
+    font-family: $header-font;
+    text-transform: uppercase;
+    font-weight: 600;
+  }
+
+  #primary {
+    float: none;
+    width: 100%;
+  }
+
+  #secondary {
+    float: none;
+    width: 100%;
+  }
+}
+
+.home {
+  #content {
+    & > .article-container {
+      display: none;
+    }
+  }
+}
+
+.fa {
+  color: black;
+  margin-right: 4px;
+}
+
+.above-entry-meta {
+  .cat-links {
+    display: none;
+  }
+}
+
+.widget_highlighted_posts,
+.widget_featured_posts,
+#content .post {
+  box-shadow: none;
+  color: black;
+
+
+  .article-content {
+    .entry-title {
+      a {
+        color: black;
+        &:focus,
+        &:active,
+        &:hover {
+          color: black;
+          text-decoration: underline;
+        }
+      }
+    }
+
+    padding: 10px 0;
+
+    .below-entry-meta {
+      padding-bottom: 5px;
+
+      span,
+      span a,
+      .posted-on,
+      .byline,
+      .comments,
+      .tag-links {
+        color: black;
+        .fa {
+          color: black;
+          margin-right: 4px;
+        }
+      }
+    }
+  }
+}
+
+.entry-content {
+  .read-more-link {
+    position: relative;
+    top: -0.5em;
+    margin-bottom: -0.5em;
+    left: -13px;
+
+    @include arrow-link;
+  }
+}

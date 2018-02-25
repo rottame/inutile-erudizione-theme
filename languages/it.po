@@ -1,0 +1,105 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"POT-Creation-Date: 2018-01-28 22:37+0100\n"
+"PO-Revision-Date: 2018-01-28 22:37+0100\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: it\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 2.0.4\n"
+"X-Poedit-Basepath: ..\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Poedit-KeywordsList: __;_e;_n:1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;esc_attr__;"
+"esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c;"
+"_n_noop:1,2;_nx_noop:3c,1,2;__ngettext_noop:1,2\n"
+"X-Poedit-SearchPath-0: .\n"
+
+#: searchform.php:12
+msgid "Search"
+msgstr "Ricerca"
+
+#: widgets/widgets.php:8
+msgid "Front Page: News Area"
+msgstr ""
+
+#: widgets/widgets.php:10
+msgid "Show widget just below menu."
+msgstr ""
+
+#: widgets/widgets.php:28
+msgid "Display a separator."
+msgstr ""
+
+#: widgets/widgets.php:31
+msgid "SIE: Separator"
+msgstr ""
+
+#: widgets/widgets.php:41
+msgid "Style:"
+msgstr ""
+
+#: widgets/widgets.php:70
+msgid "Display a link to a category."
+msgstr ""
+
+#: widgets/widgets.php:73
+msgid "SIE: Category link"
+msgstr ""
+
+#: widgets/widgets.php:82 widgets/widgets.php:432
+msgid "Select category"
+msgstr ""
+
+#: widgets/widgets.php:117
+msgid ""
+"Display latest posts or posts of specific category, which will be used as "
+"the slider."
+msgstr ""
+
+#: widgets/widgets.php:120
+msgid "SIE: Featured Category Slider"
+msgstr ""
+
+#: widgets/widgets.php:132
+msgid "Categories:"
+msgstr ""
+
+#: widgets/widgets.php:136 widgets/widgets.php:414
+msgid "Title:"
+msgstr ""
+
+#: widgets/widgets.php:225 widgets/widgets.php:357 widgets/widgets.php:512
+#, php-format
+msgid ""
+"<span class=\"posted-on\"><a href=\"%1$s\" title=\"%2$s\" rel=\"bookmark"
+"\"><i class=\"fa fa-calendar-o\"></i> %3$s</a></span>"
+msgstr ""
+
+#: widgets/widgets.php:259
+msgid "Display latest posts or posts of specific category."
+msgstr ""
+
+#: widgets/widgets.php:261
+msgid "SIE: Featured Posts (Style 1)"
+msgstr ""
+
+#: widgets/widgets.php:397
+msgid ""
+"Display latest posts or posts of specific category. Suitable for the Area "
+"Beside Slider Sidebar."
+msgstr ""
+
+#: widgets/widgets.php:399
+msgid "SIE: Highlighted Posts"
+msgstr ""
+
+#: widgets/widgets.php:426
+msgid "Show latest Posts"
+msgstr ""
+
+#: widgets/widgets.php:428
+msgid "Show posts from a category"
+msgstr ""

@@ -1,0 +1,152 @@
+
+#header-text-nav-container {
+  background: transparent;
+}
+
+#header-left-section {
+  float: none;
+  text-align: center;
+}
+
+#header-text {
+  float: none;
+  padding: 0;
+}
+
+#site-title {
+  a {
+    display: block;
+    color: black;
+    font-family: $cursive-font;
+    font-size: 90px;
+    line-height: 70px;
+
+    span {
+      display: block;
+      font-family: $header-font;
+      font-size: 65px;
+      text-transform: uppercase;
+    }
+
+    @media screen and (max-width: 480px) {
+      font-size: 60px;
+      line-height: 50px;
+      span {
+        font-size: 45px;
+      }
+    }
+  }
+}
+
+#site-description {
+  display: block;
+  color: black;
+  font-family: $cursive-font;
+  font-size: 55px;
+  line-height: normal;
+  margin-top: 8px;
+  margin-bottom: 0;
+
+  span {
+    color: #FF35FF;
+  }
+
+  @media screen and (max-width: 480px) {
+    font-size: 35px;
+  }
+}
+
+#masthead.colormag-header-classic {
+  #site-navigation.main-navigation {
+    border: 0;
+    background: transparent;
+    box-shadow: none;
+
+    ul {
+      display: flex;
+      justify-content: center;
+
+      li {
+        position: relative;
+        float: none;
+
+        a {
+          font-family: $header-font;
+          color: black;
+          font-size: 17px;
+          padding: 0;
+        }
+
+        &:active,
+        &:focus,
+        &:hover {
+          background: transparent;
+          & > a {
+            background: transparent;
+          }
+        }
+
+        &.current-menu-item a,
+        a:active,
+        a:focus,
+        a:hover {
+          color: black;
+          background: transparent;
+          text-decoration: underline;
+        }
+
+        &:not(:last-child) {
+          a {
+            margin-right: 30px;
+            &:after {
+              @include tilde;
+              line-height: normal;
+              position: absolute;
+              top: 0;
+              right: 3px;
+              line-height: 24px;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+
+@media screen and (max-width: 768px) {
+  .menu-toggle {
+    display: none;
+  }
+  #masthead.colormag-header-classic {
+    #header-text-nav-wrap {
+      padding: 30px 0 20px;
+    }
+  }
+}
+
+@media screen and (max-width: 480px) {
+  #menu-main {
+    flex-wrap: wrap;
+    li {
+      a {
+        margin-right: 30px;
+        margin-left: 30px;
+        &:before,
+        &:after {
+          @include tilde;
+          line-height: normal;
+          position: absolute;
+          top: 0;
+          line-height: 24px;
+        }
+        &:before {
+          left: 3px;
+        }
+        &:after {
+          right: 3px;
+        }
+      }
+    }
+  }
+}

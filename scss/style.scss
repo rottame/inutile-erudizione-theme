@@ -1,0 +1,25 @@
+/*
+Theme Name:     Palate
+Theme URI:      https://www.inutile-erudizione.it/
+Description:    Tema per Sfoggiare Inutile Erudizione
+Author:         Angelo Grossini
+Author URI:     https://www.inutile-erudizione.it/
+Template:       colormag
+Version:        1.0.0
+*/
+
+
+@import '../../colormag/SCSS/variables/colors';
+@import '../../colormag/SCSS/theme/theme-style';
+@import '../../colormag/SCSS/header/header';
+@import '../../colormag/SCSS/footer/footer';
+
+@import "style/fonts.scss",
+        "style/mixins.scss",
+        "style/header.scss",
+        "style/footer.scss",
+        "style/widgets.scss",
+        "style/forms.scss",
+        "style/main_style.scss",
+        "style/archive.scss",
+        "style/separators.scss";

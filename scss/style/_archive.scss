@@ -1,0 +1,281 @@
+.archive {
+  #main {
+    padding-top: 10px;
+    #primary {
+      header.page-header {
+        .page-title {
+          &:not(.category-title) {
+            @include widget-title-style;
+            @include simple-title-style;
+
+            @media screen and (max-width: 480px) {
+
+            }
+          }
+        }
+      }
+    }
+
+    #secondary {
+    }
+  }
+
+  &:not(.category-occulturiamoci),
+  &:not(.category-presentazione) {
+    #main {
+      #primary {
+        header.page-header {
+          .page-title {
+            &.category-title {
+              @include title-style;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  &.category-presentazione,
+  &.category-occulturiamoci {
+    #main {
+      #primary {
+        header.page-header {
+          .page-title {
+            &.category-title {
+              @include simple-title-style;
+              font-family: $header-font;
+              text-transform: uppercase;
+              font-size: 60px;
+
+              @media screen and (max-width: 480px) {
+                & > span {
+                  font-size: 28px;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+#content {
+  .post {
+    .article-content {
+      .entry-title {
+        @media screen and (max-width: 480px) {
+          font-size: 25px;
+          font-weight: bold;
+        }
+      }
+    }
+  }
+}
+
+.single {
+  #content {
+    .post {
+      box-shadow: none;
+    }
+  }
+}
+
+article,
+.single-article {
+  .pill-number {
+    height: 160px;
+    width: 100%;
+    text-align: center;
+
+    span {
+      font-family: $serif-font;
+      font-size: 110px;
+      line-height: 140px;
+      color: black;
+      display: block;
+      width: 200px;
+      height: 160px;
+      margin: 0 auto;
+      background-image: url(images/corner.svg), url(images/corner_b.svg);
+      background-size: 100px;
+      background-position: top left, bottom right;
+      background-repeat: no-repeat;
+    }
+  }
+
+  &.category-pillole-di-erudizione {
+    @media screen and (min-width: 480px) {
+      display: flex;
+
+      .pill-number {
+        margin-top: 40px;
+        width: 220px;
+        flex-shrink: 0;
+      }
+
+      &:not(:first-child) {
+        &:nth-child(2n),
+        &:nth-child(2n+1) {
+          .pill-number {
+            width: 160px;
+            height: 100px;
+
+            span {
+              width: 140px;
+              height: 120px;
+              font-size: 60px;
+              background-size: 70px;
+              line-height: 115px;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+.default-wp-page {
+  .previous,
+  .next {
+    a {
+      color: black;
+      position: relative;
+
+      &:hover, &focus, &:active {
+        color: black;
+      }
+    }
+  }
+
+  @media screen and (max-width: 480px) {
+    .previous,
+    .next {
+      display: block;
+      width: 100%;
+      a {
+        display: block;
+        width: 100%;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+      }
+    }
+    .previous {
+      padding-bottom: 10px;
+    }
+    .next {
+      padding-top: 10px;
+      text-align: right;
+    }
+  }
+
+  @media screen and (min-width: 480px) {
+    .previous,
+    .next {
+      a {
+        color: black;
+        position: relative;
+
+        &:hover, &focus, &:active {
+          color: black;
+          text-decoration: none;
+
+          span.meta-nav {
+            width: calc(100% + 10px);
+          }
+        }
+
+        span.meta-nav {
+          color: transparent;
+          width: 20px;
+          height: 0;
+          border-bottom: 1px solid black;
+          position: absolute;
+          bottom: 4px;
+
+          transition: width 250ms ease-out;
+
+          &:before,
+          &:after {
+            display: block;
+            content: '';
+            width: 0px;
+            height: 0px;
+            border-style: solid;
+            border-color: black transparent transparent transparent;
+            border-width: 5px 5px 0 15px;
+            transform: rotate(20deg);
+            position: absolute;
+            right: -11px;
+            top: -4px;
+          }
+          &:before {
+            top: -1px;
+            transform: rotate(-20deg);
+            border-width: 0 5px 5px 15px;
+            border-color: transparent transparent black transparent;
+          }
+        }
+      }
+
+    }
+    .previous {
+      a {
+        margin-left: 20px;
+
+        span.meta-nav {
+          left: -10px;
+          &:before,
+          &:after {
+            display: block;
+            content: '';
+            width: 0px;
+            height: 0px;
+            border-style: solid;
+            border-color: black transparent transparent transparent;
+            border-width: 5px 15px 0 5px;
+            transform: rotate(-20deg);
+            position: absolute;
+            left: -11px;
+            top: -4px;
+          }
+          &:before {
+            top: -1px;
+            transform: rotate(20deg);
+            border-width: 0 15px 5px 5px;
+            border-color: transparent transparent black transparent;
+          }
+        }
+      }
+    }
+    .next {
+      a {
+        margin-right: 20px;
+        span.meta-nav {
+          right: -10px;
+          &:before,
+          &:after {
+            display: block;
+            content: '';
+            width: 0px;
+            height: 0px;
+            border-style: solid;
+            border-color: black transparent transparent transparent;
+            border-width: 5px 5px 0 15px;
+            transform: rotate(20deg);
+            position: absolute;
+            right: -11px;
+            top: -4px;
+          }
+          &:before {
+            top: -1px;
+            transform: rotate(-20deg);
+            border-width: 0 5px 5px 15px;
+            border-color: transparent transparent black transparent;
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,55 @@
+form {
+  label {
+    font-family: $cursive-font;
+    line-height: 20px;
+    font-size: 30px;
+    color: black;
+  }
+  button[type="submit"] {
+    border: 7px solid transparent;
+    border-image-source: url('images/button.svg');
+    border-image-slice: 7;
+    border-image-width: initial;
+    border-image-outset: 3px;
+    border-image-repeat: repeat;
+    background: white;
+    color: black;
+  }
+}
+.search-wrap {
+
+  label {
+    display: inline-block;
+  }
+
+  input[type="text"] {
+    background: none;
+    border-bottom: 2px dashed #333;
+    outline: none;
+    width: calc(100% - 140px);
+    padding: 13px 0 2px 5px;
+    height: auto;
+    line-height: 26px;
+    font-family: $base-font;
+    color: black;
+    font-size: 20px;
+    font-style: italic;
+
+    &:focus {
+      border-bottom-color: black;
+    }
+  }
+  button {
+    line-height: normal;
+    top: 3px;
+
+    &:before {
+      color: black;
+    }
+
+    &:active {
+      right: -1px;
+      top: 4px;
+    }
+  }
+}

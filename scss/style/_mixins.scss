@@ -1,0 +1,211 @@
+@mixin tilde {
+  display: inline-block;
+  content: '~';
+  font-family: 'MySymbols', serif;
+  font-size: 30px;
+  font-weight: normal;
+  color: black;
+  width: 25px;
+  text-align: center;
+}
+
+@mixin widget-title-style {
+  font-family: $cursive-font;
+  font-size: 40px;
+  text-transform: none;
+  border-bottom: 1px solid black;
+  text-align: left;
+
+  & > span {
+    background: none;
+    padding: 0;
+    color: black;
+  }
+}
+
+@mixin simple-title-style {
+  border: 0;
+  text-align: center;
+  color: black;
+  & > span {
+    color: black;
+    background: none;
+    display: inline-block;
+    font-size: 65px;
+    line-height: 50px;
+    padding: 0 60px;
+    position: relative;
+
+    &:before, &:after {
+      @include tilde;
+      font-size: 40px;
+      padding: 0 16px;
+      position: absolute;
+      top: -5px;
+
+    }
+    &:before{
+      left: 0;
+    }
+    &:after {
+      right: 0;
+    }
+  }
+
+  @media screen and (max-width: 480px) {
+
+    & > span {
+      font-size: 40px;
+      line-height: 30px;
+      padding: 0 50px;
+
+      &:before, &:after {
+        font-size: 35px;
+        top: 0;
+      }
+    }
+  }
+}
+
+@mixin title-style {
+  border: 0;
+  color: black;
+  text-align: center;
+
+  & > span {
+    display: inline-block;
+    background: none;
+    padding: 0 60px;
+    color: black;
+    font-family: $cursive-font;
+    text-transform: none;
+    font-size: 60px;
+    line-height: 50px;
+    position: relative;
+
+    &:before, &:after {
+      @include tilde;
+      font-size: 40px;
+      padding: 0 16px;
+      position: absolute;
+      top: 25px;
+    }
+    &:before{
+      left: 0;
+    }
+    &:after {
+      right: 0;
+    }
+
+    & > span {
+      background: none;
+      padding: 0;
+      color: black;
+      font-family: $header-font;
+      text-transform: uppercase;
+      display: block;
+    }
+  }
+
+  @media screen and (max-width: 480px) {
+    & > span {
+      font-size: 40px;
+      line-height: 30px;
+
+      & > span {
+        font-size: 30px;
+      }
+
+      &:before, &:after {
+        top: 10px;
+      }
+    }
+  }
+}
+
+@mixin arrow-link {
+  .the-link {
+    display: inline-block;
+    padding: 0 20px;
+    border-bottom: 1px solid black;
+    position: relative;
+    margin-left: 20px;
+
+    &:before,
+    &:after {
+      display: block;
+      content: '';
+      width: 0px;
+      height: 0px;
+      border-style: solid;
+      border-color: black transparent transparent transparent;
+      border-width: 5px 5px 0 15px;
+      transform: rotate(20deg);
+      position: absolute;
+      right: -9px;
+      bottom: -1px;
+    }
+    &:before {
+      bottom: -4px;
+      transform: rotate(-20deg);
+      border-width: 0 5px 5px 15px;
+      border-color: transparent transparent black transparent;
+    }
+
+    span {
+      padding: 0;
+      &:before,
+      &:after {
+        display: block;
+        content: '';
+        border-style: solid;
+        border-color: black;
+        border-width: 1px 1px;
+        width: 10px;
+        height: 6px;
+        transform: skewX(45deg);
+        position: absolute;
+        bottom: -1px;
+        left: -3px;
+      }
+      &:after {
+        transform: skewX(-45deg);
+        bottom: -8px;
+      }
+    }
+
+    a {
+      color: black;
+      font-family: $header-font;
+      font-weight: bold;
+      text-transform: uppercase;
+      display: block;
+      margin-bottom: -5px;
+      background: transparent;
+      padding: 0;
+
+      &:active, &:focus, &:hover {
+        text-decoration: none;
+      }
+
+      &:before,
+      &:after {
+        display: block;
+        content: '';
+        border-style: solid;
+        border-color: black;
+        border-width: 1px 1px;
+        width: 10px;
+        height: 6px;
+        transform: skewX(45deg);
+        position: absolute;
+        bottom: -1px;
+        left: 3px;
+      }
+      &:after {
+        transform: skewX(-45deg);
+        bottom: -8px;
+      }
+    }
+  }
+}

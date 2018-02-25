@@ -1,0 +1,270 @@
+#main {
+  .widget,
+  .widget.new_posts,
+  .widget.widget_featured_posts,
+  .widget.widget_highlighted_posts,
+  .widget.widget_pillole_di_erudizione {
+    margin-bottom: 0;
+
+    .widget-title {
+      text-align: center;
+      border: 0;
+
+      & > span {
+        background-color: transparent;
+        padding: 0;
+        margin: 0 auto;
+        color: black;
+        font-size: 34px;
+      }
+    }
+
+    .articles {
+      display: flex;
+
+      .single-article {
+        width: 47.5%;
+        flex-shrink: 1;
+        flex-grow: 0;
+        background-color: transparent;
+
+
+        &:first-child {
+          margin-right: 5%;
+        }
+
+        .article-content {
+          color: black;
+
+          a {
+            color: black;
+          }
+        }
+      }
+
+      @media screen and (max-width: 480px) {
+        flex-wrap: wrap;
+
+        .single-article {
+          flex-shrink: 0;
+          width: 100%;
+          margin-right: 0;
+        }
+
+        h3 {
+          font-size: 25px;
+          font-weight: bold;
+        }
+      }
+    }
+
+    .single-article {
+      background-color: transparent;
+      box-shadow: none;
+
+      &:first-child {
+        margin-right: 5%;
+      }
+
+      .article-content {
+        color: black;
+
+        a {
+          color: black;
+        }
+      }
+    }
+
+    .above-entry-meta {
+      margin-top: -20px;
+
+      .cat-links a {
+        font-family: $header-font;
+        font-size: 16px;
+        font-weight: 600;
+        text-transform: uppercase;
+        line-height: 25px;
+        margin: 0 12px;
+        position: relative;
+
+        &:before {
+          font-family: $serif-font;
+          content: '{';
+          display: inline;
+          font-size: 24px;
+          position: absolute;
+          top: -4px;
+          left: -12px;
+        }
+        &:after {
+          font-family: $serif-font;
+          content: '}';
+          display: inline;
+          font-size: 24px;
+          position: absolute;
+          top: -4px;
+          right: -12px;
+        }
+
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+    }
+
+    .widget_highlighted_post_area {
+      display: flex;
+
+      .single-article {
+        width: 31%;
+        flex-grow: 0;
+        flex-shrink: 0;
+
+        &:not(:last-child) {
+          margin-right: 3%;
+        }
+
+        .article-content {
+          background: none;
+          position: static;
+          padding-right: 0;
+
+          .below-entry-meta {
+            text-align: center;
+          }
+        }
+      }
+
+      @media screen and (max-width: 480px) {
+        display: block;
+
+        .single-article {
+          width: 100%;
+          max-width: 100%;
+        }
+      }
+    }
+
+    .widget-title {
+      @include widget-title-style;
+    }
+
+    &.new_posts {
+      .widget-title {
+        @include simple-title-style;
+      }
+
+      .above-entry-meta {
+        .cat-links {
+          display: block;
+          margin: 5px 0;
+        }
+      }
+    }
+
+    &.widget_highlighted_posts,
+    &.widget_featured_posts {
+      .widget-title {
+        &:not(.occulturiamoci) {
+          @include title-style;
+        }
+
+        &.occulturiamoci {
+          @include simple-title-style;
+          font-family: $header-font;
+          text-transform: uppercase;
+          span {
+            font-size: 60px;
+          }
+
+          @media screen and (max-width: 480px) {
+            span {
+              font-size: 25px;
+            }
+          }
+        }
+      }
+    }
+
+    &.widget_featured_posts,
+    &.widget_pillole_di_erudizione {
+      .single-article {
+        & + .hr,
+        .hr {
+          width: 80%;
+        }
+      }
+    }
+  }
+
+  .widget {
+    &.separator {
+      margin-top: 20px;
+      margin-bottom: 25px;
+    }
+
+    &.category-link {
+      position: relative;
+      top: -2em;
+      margin-bottom: -2em;
+
+      @include arrow-link;
+
+      @media screen and (max-width: 480px) {
+        position: static;
+        margin: 2em 0;
+
+        text-align: center;
+      }
+    }
+  }
+}
+
+#secondary {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: stretch;
+
+  aside {
+    width: 47.5%;
+
+    &:nth-child(2n) {
+      margin-left: 5%;
+    }
+
+    &.widget_search {
+      width: 100%;
+      margin: 0 0 30px;
+
+      .search-wrap {
+        button {
+          right: 1px;
+
+          &:active {
+            right: 0;
+          }
+        }
+      }
+    }
+
+    a {
+      color: black;
+      white-space: nowrap;
+    }
+  }
+
+  @media screen and (max-width: 480px) {
+    display: none;
+  }
+}
+
+#main .widget.category_presentation {
+  width: 100%;
+  .articles {
+    display: block;
+    .single-article {
+      margin: 0;
+      width: auto;
+    }
+  }
+}

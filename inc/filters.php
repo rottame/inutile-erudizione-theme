@@ -12,7 +12,7 @@ function filter_description($desc){
 }
 
 function filter_category($desc){
-  return preg_replace('/(buffe|erudizione|bermuda)$/i', '<span>\1</span>', $desc);
+  return preg_replace('/(buffe|erudizione|bermuda|proci)$/i', '<span>\1</span>', $desc);
 }
 
 function pill_number($title) {

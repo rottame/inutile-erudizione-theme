@@ -1,4 +1,8 @@
 <?php
+define( 'COLORMAG_PARENT_DIR', get_template_directory() );
+define( 'COLORMAG_INCLUDES_DIR', COLORMAG_PARENT_DIR . '/inc' );
+define( 'COLORMAG_WIDGETS_DIR', COLORMAG_INCLUDES_DIR . '/widgets' );
+
 require 'inc/header.php';
 require 'inc/filters.php';
 require 'widgets/widgets.php';
@@ -17,6 +21,10 @@ add_action('colormag_after_header', 'add_separator', 10, 2);
 //add_action( 'wp_enqueue_scripts', 'enqueue_parent_theme_style' );
 
 function palate_exclude_category($query) {
+  if(is_admin()) {
+    return;
+  }
+
   if (!$query->is_main_query()) {
     return;
   }

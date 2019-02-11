@@ -32,6 +32,8 @@
 </head>
 
 <body <?php body_class(); ?>>
+<a href="http://www.inutile-erudizione.it/constitutionlost.php"><!--lawnmowers --></a>
+<a href="http://www.ilcirroso.it/chaoticmodification.php"><!-- solitude --></a>
 
 <?php do_action( 'colormag_before' ); ?>
 

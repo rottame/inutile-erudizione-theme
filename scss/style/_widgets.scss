@@ -1,4 +1,13 @@
 #main {
+  .front-page-top-section {
+    .widget.new_posts {
+      img {
+        max-width: 300px;
+        max-height: 300px;
+      }
+    }    
+  }
+   
   .widget,
   .widget.new_posts,
   .widget.widget_featured_posts,

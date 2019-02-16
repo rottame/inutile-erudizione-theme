@@ -66,11 +66,11 @@
       display: flex;
       justify-content: center;
 
-      li {
+      & > li {
         position: relative;
         float: none;
 
-        a {
+        & > a {
           font-family: $header-font;
           color: black;
           font-size: 17px;
@@ -93,6 +93,7 @@
           color: black;
           background: transparent;
           text-decoration: underline;
+          border: none;
         }
 
         &:not(:last-child) {
